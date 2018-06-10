@@ -1,0 +1,15 @@
+body {
+    background-image: url('../images/TIE-fighter.jpg');
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: center;
+}
+
+.container {
+    margin: 10px;
+    max-width: 100%;
+}
+
+.empty {
+    background-image: none;
+}
