@@ -34,9 +34,13 @@ $(".name").click(function() {
     var dataId = "#" + $(this).attr("data-name");
 //Cloning the above referenced class to the id player so that it 
 //moves the player card on the screen 
-    $(dataId).clone().appendTo(".player");
-    //hides the original card
-    $(this).parents(".grab").hide();
+    // $(dataId).clone().appendTo(".player");
+    // //hides the original card
+    // $(this).parents(".grab").hide();
+   
+    $(dataId).detach(".grab").appendTo(".player")
+
+    
 //if the object key fighter is empty grab the atribute data-name and 
 // and apply it to the object 
     if (battleWarriors.fighter === "") {
@@ -92,7 +96,7 @@ $(".fight").click(function() {
 //set fighter attack damage 
 var figherDamage = Math.round(Math.sqrt(warriorHealth.fighterHealth)) || 0;
 figherDamage++;
-console.log(figherDamage);
+
 warriorHealth.opponentHealth = (warriorHealth.opponentHealth - figherDamage);
 
 var opponentDamage = Math.round(Math.sqrt(warriorHealth.opponentHealth)) || 0;
@@ -100,11 +104,11 @@ warriorHealth.fighterHealth = (warriorHealth.fighterHealth - opponentDamage)
 // $("#vaderhealth").text(warriorHealth.fighterHealth)
 
 $("#" + battleWarriors.fighter + "health").text(warriorHealth.fighterHealth);
-console.log($("#" + battleWarriors.fighter + "health"))
+
 $("#" + battleWarriors.opponent + "health").text(warriorHealth.opponentHealth);
  if (warriorHealth.fighterHealth <= 0) {
      $(".fight").html("<p class='fight'> You Loose!</p>");
-     $("replay").html("<button class='btn btn-primary replay'>Replay!</button>");
+     $(".replay").html("<button class='btn btn-primary replay'>Replay!</button>");
      play = false;
     
  }
@@ -125,12 +129,18 @@ $("#" + battleWarriors.opponent + "health").text(warriorHealth.opponentHealth);
         };
         battleWarriors = {fighter: "", opponent: ""};
         play = true;
-       
+        var id = "#" + $(battleWarriors.fighter).attr("data-name");
         $(".player").html("<div></div>");
         $(".opponent").html("<div></div>");
         $(".fight").html("<div></div>");
         $(".grab").show();
         $(".replay").html("<div></div>")
+        $(id).detach(".grab").appendTo(".player")
+       
+
+
+    
+    
 
     });
 });
