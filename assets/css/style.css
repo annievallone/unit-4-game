@@ -13,3 +13,13 @@ body {
 .empty {
     background-image: none;
 }
+
+.card-img {
+    height: 20%;
+    background-image: none;
+}
+
+.card-body {
+    text-align: center
+
+}

@@ -6,23 +6,23 @@ var health = {
     obiwanhealth: 200,
     bobahealth: 100,
 }
-//setting the battle people 
+//setting the battle people   
 var battleWarriors = {fighter: "", opponent: ""};
 //setting everyone's health
 var warriorHealth = {fighterHealth: "", opponentHealth: ""}
 
+// set play to true
+var play = true;
+
 $("#vaderhealth").text(health.vaderhealth);
 $("#obiwanhealth").text(health.obiwanhealth);
 $("#bobahealth").text(health.bobahealth);
-
-
 
 //setting variable for determining if we have both competitors 
 var warriorsFull = false;
 
 //Choosing your competitors 
 //when the name button is clicked 
-
 
 $(".name").click(function() {
     //if both competitors are already picked do nothing 
@@ -51,7 +51,7 @@ $(".name").click(function() {
     }
     //if both warriors are chosen display the fight button 
     if(warriorsFull) {
-        $("#fight").html("<button class='btn btn-primary fight'> FIGHT!</button>")
+        $(".fight").html("<button class='btn btn-primary fight'> FIGHT!</button>")
         getHealth()
         return battleWarriors;
     }
@@ -87,46 +87,53 @@ $(".name").click(function() {
         }
 
 //when fight button is clicked 
-$("#fight").click(function() {
-
-    if (warriorHealth.opponentHealth || warriorHealth.fighterHealth <= 0) {
+$(".fight").click(function() {
+    if (play) {
 //set fighter attack damage 
-var figherDamage = Math.round(Math.sqrt(warriorHealth.fighterHealth));
-warriorHealth.opponentHealth = (warriorHealth.opponentHealth - figherDamage)
+var figherDamage = Math.round(Math.sqrt(warriorHealth.fighterHealth)) || 0;
+figherDamage++;
+console.log(figherDamage);
+warriorHealth.opponentHealth = (warriorHealth.opponentHealth - figherDamage);
 
-;
-
-var opponentDamage = Math.round(Math.sqrt(warriorHealth.opponentHealth));
+var opponentDamage = Math.round(Math.sqrt(warriorHealth.opponentHealth)) || 0;
 warriorHealth.fighterHealth = (warriorHealth.fighterHealth - opponentDamage)
+// $("#vaderhealth").text(warriorHealth.fighterHealth)
 
-
-
-    }
+$("#" + battleWarriors.fighter + "health").text(warriorHealth.fighterHealth);
+console.log($("#" + battleWarriors.fighter + "health"))
+$("#" + battleWarriors.opponent + "health").text(warriorHealth.opponentHealth);
+ if (warriorHealth.fighterHealth <= 0) {
+     $(".fight").html("<p class='fight'> You Loose!</p>");
+     $("replay").html("<button class='btn btn-primary replay'>Replay!</button>");
+     play = false;
     
+ }
+    else if (warriorHealth.opponentHealth <= 0) {
+        $(".fight").html("<p class='fight' style='color: white'>You Win!</p>");
+        $(".replay").html("<button class='btn btn-primary replay'>Replay!</button>");
+        play = false;
+
+ }
+    }
     })
-})
-// function updateHealth () {
-//         var getFighter = (battleWarriors.fighter).substring(0,1);
-//         for (var key in health) {
-//          if (health.hasOwnProperty(key)) {
-//              var subkey = (key).substring(0,1);
-             
-             
-//          }
-//      }
-//      var getOpponent = (battleWarriors.opponent).substring(0,1);
-//      for (var key in health) {
-//         if (health.hasOwnProperty(key)) {
-//             var subkey = (key).substring(0,1);
-            
-            
-//         }
-//     }
-//     }
 
+    $(".replay").click(function() {
+        health = {
+            vaderhealth: 150,
+            obiwanhealth: 200,
+            bobahealth: 100,
+        };
+        battleWarriors = {fighter: "", opponent: ""};
+        play = true;
+       
+        $(".player").html("<div></div>");
+        $(".opponent").html("<div></div>");
+        $(".fight").html("<div></div>");
+        $(".grab").show();
+        $(".replay").html("<div></div>")
 
-
-
+    });
+});
 
 //set warrior attack and defend damage 
 //add check to see if either goes to 0 then you loose or win 
